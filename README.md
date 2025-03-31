@@ -114,7 +114,7 @@ Find your posts:
 
 # curl -X GET "https://api.linkedin.com/rest/posts?author={encoded person urn or organization urn like # urn%3Ali%3Aperson%3A5abc_dEfgH or urn%3Ali%3Aorganization%3A2414183}&q=author&count=10&sortBy=LAST_MODIFIED" \
 # -H "X-Restli-Protocol-Version: 2.0.0" \
-# -H "LinkedIn-Version: {202411}" \
+# -H "LinkedIn-Version: 202502" \
 # -H "X-RestLi-Method: FINDER" \
 # -H "Authorization: Bearer ${TOKEN}"
 
@@ -155,6 +155,38 @@ domains=(
   "LEARNING_COACH_AI_TAKEOUT" "LEARNING_COACH_INBOX" "LEARNING_ROLEPLAY_INBOX" "VOLUNTEERING_EXPERIENCES"
   "ACCOUNT_HISTORY" "INSTANT_REPOSTS"
 )
+
+
+curl --location --request POST "https://api.linkedin.com/rest/memberAuthorizations" \
+--header "LinkedIn-Version: 202312" \
+--header "Authorization: Bearer $TOKEN" \
+--header "Content-Type: application/json" \
+--data-raw "{}"
+
+curl --location --request GET "https://api.linkedin.com/rest/memberAuthorizations?q=memberAndApplication" \
+--header "LinkedIn-Version: 202312" \
+--header "Authorization: Bearer $TOKEN" \
+--header "Content-Type: application/json"
+```
+
+```console
+{"paging":{"start":0,"count":10,"links":[]},
+    "elements":[
+        {
+            "regulatedAt":1234566891011,
+            "memberComplianceScopes":[
+                "DMA"
+            ],
+            "memberComplianceAuthorizationKey": {
+                "developerApplication":"urn:li:developerApplication:123456",
+                "member":"urn:li:person:123ABC"
+            }
+        }
+    ]
+}
+```
+
+```bash
 
 # Initialisation des variables
 count=10
@@ -203,6 +235,3 @@ done
 
 ```
 
-```console
-
-```
